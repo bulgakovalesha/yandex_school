@@ -1,89 +1,66 @@
 package ya.translate;
-
-
-
 import java.util.ArrayList;
-
 import ya.translate.Post.onDataIn;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.example.yandex_translate.R;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.Editable;
 import android.text.TextWatcher;
-
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-
-
 import android.view.View;
-
-
-
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView.OnEditorActionListener;
-
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 public class ChldView extends RelativeLayout{
 	static ChldView chldView;
 	int frame2up=0;
-	// массив строк неизвесной длинны для удаления
+	// РјР°СЃСЃРёРІ СЃС‚СЂРѕРє РЅРµРёР·РІРµСЃРЅРѕР№ РґР»РёРЅРЅС‹ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
 	ArrayList<String[]> frame2trash;
-	// результаты после запросов языков
+	// СЂРµР·СѓР»СЊС‚Р°С‚С‹ РїРѕСЃР»Рµ Р·Р°РїСЂРѕСЃРѕРІ СЏР·С‹РєРѕРІ
 	JSONArray data1;public static  JSONObject data2;
 	public static  String[][] langs;
-	
 	TextView title;
-	//  3 нижних кнопки
+	//  3 РЅРёР¶РЅРёС… РєРЅРѕРїРєРё
 	ImageView i1,i2,i3;
-
-	
-	// поле ввода
-   EditText edittext;
-   // основной слой
+	// РїРѕР»Рµ РІРІРѕРґР°
+        EditText edittext;
+        // РѕСЃРЅРѕРІРЅРѕР№ СЃР»РѕР№
 	LinearLayout rtrtr;
 	int position; 
 	//
 	public static String check="en",sucheck="en-ru";
 	//
 TableLayout tl;
-// поле вывода
+// РїРѕР»Рµ РІС‹РІРѕРґР°
 TextView outText;int H;
 	private void init(Context context,int  num) {
 		chldView=this;
 		 DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
-	      
-	        H = dm.heightPixels;
-	ScrollView syu=new ScrollView(getContext());
+	         H = dm.heightPixels;
+	         ScrollView syu=new ScrollView(getContext());
 		 rtrtr=new LinearLayout(getContext());
 		 RelativeLayout.LayoutParams paramsq=new RelativeLayout.LayoutParams(-1,-1);
 		 paramsq.setMargins(15, 0, 15, 100);
-		
-		rtrtr.setOrientation(LinearLayout.VERTICAL);
-		
-	syu.setPadding(15 ,0, 15, 0);
-	syu.addView(rtrtr);
-	
-
-		addView(syu);
-
+		 rtrtr.setOrientation(LinearLayout.VERTICAL);
+		 syu.setPadding(15 ,0, 15, 0);
+		 syu.addView(rtrtr);
+		 addView(syu);
 	syu.setLayoutParams(paramsq);
 	syu.setY(120);
 		setBackgroundColor(0xffffffff);
-		// параметры титла
+		// РїР°СЂР°РјРµС‚СЂС‹ С‚РёС‚Р»Р°
 	title=new TextView(context);
 	title.setTextSize(20);
 	title.setTextColor(0xff000000);
@@ -94,9 +71,7 @@ if(num!=1)
 addView(title,-1,-2);
          tl=new TableLayout(context);
          tl.setBackgroundColor(0xffffffff);
-     
-         // параметры нижней таблицы, куда входят 3 кнопки   
-         
+         // РїР°СЂР°РјРµС‚СЂС‹ РЅРёР¶РЅРµР№ С‚Р°Р±Р»РёС†С‹, РєСѓРґР° РІС…РѕРґСЏС‚ 3 РєРЅРѕРїРєРё   
         TableLayout.LayoutParams prochparams=new TableLayout.LayoutParams(-1,2);
         prochparams.setMargins(0, 20, 0, 20);
     
@@ -115,19 +90,14 @@ addView(title,-1,-2);
    tr.addView(i1);
   i2=new ImageView(context);
    tr.addView(i2);
-   //  обработка кнопок 
+   //  РѕР±СЂР°Р±РѕС‚РєР° РєРЅРѕРїРѕРє 
    i1.setOnClickListener(new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
-		StartAc.startAc.gotoIndex(2);
-			
-		
-			
+		StartAc.startAc.gotoIndex(2);	
 		}
 	});
    i2.setOnClickListener(new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
 		StartAc.startAc.gotoIndex(1);	
@@ -137,7 +107,6 @@ addView(title,-1,-2);
    i3=new ImageView(context);
    tr.addView(i3);
    i3.setOnClickListener(new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
 			StartAc.startAc.gotoIndex(0);
@@ -146,7 +115,7 @@ addView(title,-1,-2);
    i3.setImageResource(R.drawable.setting_noactive);
         
         addView(tl);
-        // уходим в разные парамеры отображения в зависимости от номера 
+        // СѓС…РѕРґРёРј РІ СЂР°Р·РЅС‹Рµ РїР°СЂР°РјРµСЂС‹ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РЅРѕРјРµСЂР°
         switch (num){
 		case 1:
 			void1();
@@ -158,20 +127,16 @@ addView(title,-1,-2);
 			void3();
 			break;
 		}
-
 	}
-
-	
-
 	void void1(){
-		title.setText("Перевод");
+		title.setText("РџРµСЂРµРІРѕРґ");
 		title.setId(85455);
 		 i1.setImageResource(R.drawable.tr);
 	 RelativeLayout TextEndButtons=new RelativeLayout(getContext());
 	TextEndButtons.setPadding(20, 20, 20, 0);
 		 
 			 edittext=new EditText(getContext());
-			 //  TextEndButtons совмещает окно ввода икнопки
+			 //  TextEndButtons СЃРѕРІРјРµС‰Р°РµС‚ РѕРєРЅРѕ РІРІРѕРґР° РёРєРЅРѕРїРєРё
 			 TextEndButtons.addView(edittext,-1, H /4);
 		
 		outText=new TextView(getContext());
@@ -190,7 +155,7 @@ addView(title,-1,-2);
 		imadd.setImageResource(R.drawable.saved); TextEndButtons.addView(imadd);
 		
 		imadd.setLayoutParams(ppp);
-		// обработка кнопки избранное
+		// РѕР±СЂР°Р±РѕС‚РєР° РєРЅРѕРїРєРё РёР·Р±СЂР°РЅРЅРѕРµ
 		imadd.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -204,9 +169,8 @@ addView(title,-1,-2);
 	    imad.setPadding(10, H /6, 0, 0);
 		imad.setImageResource(R.drawable.ic_clear_search_api_holo_light);
 		TextEndButtons.addView(imad);
-		//  обработка кнопки очистить
+		//  РѕР±СЂР°Р±РѕС‚РєР° РєРЅРѕРїРєРё РѕС‡РёСЃС‚РёС‚СЊ
 		imad.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				if(edittext.getText().length()!=0)
@@ -215,18 +179,14 @@ addView(title,-1,-2);
 				StartAc.startAc.reloadHistory();
 			}
 		});
-		
-		
-	
-		// размер и цвет поля вывода
+		// СЂР°Р·РјРµСЂ Рё С†РІРµС‚ РїРѕР»СЏ РІС‹РІРѕРґР°
 			outText.setTextColor(0xff000000);outText.setTextSize(24);
-			// отслеживание поля ввода
+			// РѕС‚СЃР»РµР¶РёРІР°РЅРёРµ РїРѕР»СЏ РІРІРѕРґР°
 		TextWatcher generateTextWatcher=new TextWatcher() {
-				
 				@Override
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					outText.setText("");
-					//  посылка запроса после ввода при каждой новой букве	
+					//  РїРѕСЃС‹Р»РєР° Р·Р°РїСЂРѕСЃР° РїРѕСЃР»Рµ РІРІРѕРґР° РїСЂРё РєР°Р¶РґРѕР№ РЅРѕРІРѕР№ Р±СѓРєРІРµ	
 					if(s.length()!=0)
 					translate("&lang="+check+"&text="+s.toString().replace(" ", "%20"));
 				}
@@ -244,38 +204,35 @@ addView(title,-1,-2);
 			
 	}
 void void2(){
-	title.setText("История");
-	// обработка титла 2 окна
+	title.setText("РСЃС‚РѕСЂРёСЏ");
+	// РѕР±СЂР°Р±РѕС‚РєР° С‚РёС‚Р»Р° 2 РѕРєРЅР°
 	title.setOnClickListener(new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
 			if(frame2up==0){frame2up=1;
-			title.setText("Избранное");
+			title.setText("РР·Р±СЂР°РЅРЅРѕРµ");
 			String[][] arr1 = toDoDBOpenHelper.allArray.getArrayTop();
 			if(arr1.length >0){
 				frame2trash =new ArrayList<String[]>();
-			
 			HistryUpdate(arr1, new String[0][0]);
 			}
 			}else{ frame2up=0;
-			title.setText("История");
+			title.setText("РСЃС‚РѕСЂРёСЏ");
 			update();
-			}
-			
+			}	
 		}
 	});
 	RelativeLayout  trr=new RelativeLayout(getContext());
 	addView(trr,-1,-2);
 	trr.setGravity(Gravity.CENTER_VERTICAL);
-	// кнопка удалить
+	// РєРЅРѕРїРєР° СѓРґР°Р»РёС‚СЊ
 	ImageView trash=new ImageView(getContext());
 	trash.setId(354546);
 	RelativeLayout.LayoutParams p=new RelativeLayout.LayoutParams(-2,-2);
 	p.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 	trash.setLayoutParams(p);
 	trash.setImageResource(R.drawable.trash);
-	// кнопка снять выделение
+	// РєРЅРѕРїРєР° СЃРЅСЏС‚СЊ РІС‹РґРµР»РµРЅРёРµ
 	ImageView btn_close_normal=new ImageView(getContext());
 	btn_close_normal.setId(354549);
 btn_close_normal.setImageResource(R.drawable.btn_close_normal);
@@ -283,9 +240,8 @@ btn_close_normal.setPadding(20, 20, 0, 0);
 	trr.addView(btn_close_normal);
 	trash.setVisibility(GONE);
 	btn_close_normal.setVisibility(GONE);
-	// приводим все в начальное положение
+	// РїСЂРёРІРѕРґРёРј РІСЃРµ РІ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ
 	btn_close_normal.setOnClickListener(new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
 			update();
@@ -293,16 +249,15 @@ btn_close_normal.setPadding(20, 20, 0, 0);
 			v.setVisibility(GONE);
 		}
 	});
-	// удаляем все, что есть в frame2trash
+	// СѓРґР°Р»СЏРµРј РІСЃРµ, С‡С‚Рѕ РµСЃС‚СЊ РІ frame2trash
 	trash.setOnClickListener(new OnClickListener() {
-		
 		@Override
 		public void onClick(View v) {
 			StartAc.OpenHelper.removeRows(frame2trash);
 			findViewById(354549).setVisibility(GONE);
 			v.setVisibility(GONE);
 			frame2up=0;
-			title.setText("История");
+			title.setText("РСЃС‚РѕСЂРёСЏ");
 			update();
 		}
 	});
@@ -310,16 +265,13 @@ btn_close_normal.setPadding(20, 20, 0, 0);
 	 i2.setImageResource(R.drawable.save);
 	setBackgroundColor(0xffeeeeee);
 update();
-
 	}
 void update() {
-	// у нас два массива - "избранное" и "история"; получаем их из базы
+	// Сѓ РЅР°СЃ РґРІР° РјР°СЃСЃРёРІР° - "РёР·Р±СЂР°РЅРЅРѕРµ" Рё "РёСЃС‚РѕСЂРёСЏ"; РїРѕР»СѓС‡Р°РµРј РёС… РёР· Р±Р°Р·С‹
 	String[][] arr2 = toDoDBOpenHelper.allArray.getArrayHistory();
 	String[][] arr1 = toDoDBOpenHelper.allArray.getArrayTop();
-	
-	// создаем новый список для удаления
+	// СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№ СЃРїРёСЃРѕРє РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
 	frame2trash =new ArrayList<String[]>();
-
 	HistryUpdate(arr1, arr2);	
 }
 private void HistryUpdate(final String[][] arr1,final String[][] arr2) {
@@ -340,8 +292,7 @@ private void HistryUpdate(final String[][] arr1,final String[][] arr2) {
 private void HistryUpdatethis(String[][] arr,int icon){
 	
 	for(int i=0;i<arr.length;i++){
-
-		// слой отображения истории или избранного	
+		// СЃР»РѕР№ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РёСЃС‚РѕСЂРёРё РёР»Рё РёР·Р±СЂР°РЅРЅРѕРіРѕ	
 	final LinearLayout r = new LinearLayout(getContext());
 
 	r.setPadding(0, 10, 10, 10);
@@ -356,9 +307,9 @@ private void HistryUpdatethis(String[][] arr,int icon){
 	 im.setPadding(0, 0, 20, 0);
 	 LinearLayout run = new LinearLayout(getContext());
 	 run.setOrientation(LinearLayout.VERTICAL);
-	 // запрос
+	 // Р·Р°РїСЂРѕСЃ
 	 final TextView en=new TextView(getContext());
-	 // перевод
+	 // РїРµСЂРµРІРѕРґ
 	 final TextView ru=new TextView(getContext());
 	 en.setTextColor(0xff000000);
 	 ru.setTextColor(0xff888888);
@@ -366,13 +317,10 @@ private void HistryUpdatethis(String[][] arr,int icon){
 	 ru.setText(arr[i][1]);
 	 run.addView(en);
 	 run.addView(ru);
-	 
 	 r.addView(run);
 	 r.addView(langs,-1,-1);
-
 	 im.setImageResource(icon); 
 	 im.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				r.setBackgroundColor(0x55aa6677);
@@ -384,13 +332,11 @@ private void HistryUpdatethis(String[][] arr,int icon){
 		});
 	 
 	 rtrtr.addView(r);
-	 
 	}
-	
 }
 
 void void3(){
-	title.setText("Настройки");
+	title.setText("РќР°СЃС‚СЂРѕР№РєРё");
 	setBackgroundColor(0xffdddddd);
 
 	
@@ -404,16 +350,16 @@ p.setonDataIn(new onDataIn() {
 			JSONObject dataJsonObj;
 			if(data!=null)
 				try {
-					// разбираем, что пришло
+					// СЂР°Р·Р±РёСЂР°РµРј, С‡С‚Рѕ РїСЂРёС€Р»Рѕ
 					dataJsonObj = new JSONObject(data);
 					 data1 = dataJsonObj.getJSONArray("dirs");
 					data2 = dataJsonObj.getJSONObject("langs");
 					 langs=new String[data2.length()][2];
-					for(int i=0;i<data2.length();i++)
-				{       // заполняем массив с языками
+					for(int i=0;i<data2.length();i++){       
+						// Р·Р°РїРѕР»РЅСЏРµРј РјР°СЃСЃРёРІ СЃ СЏР·С‹РєР°РјРё
 						langs[i][0]=String.valueOf(data2.names().get(i));
 						langs[i][1]=data2.getString(langs[i][0]);
-		}
+		                        }
 					SettinUpdate(); //data2.toString(0)
 				} catch (JSONException e) {
 					Log.e("JSONException", String.valueOf(e.getMessage()));
@@ -427,9 +373,8 @@ p.setonDataIn(new onDataIn() {
 			
 			@Override
 			public void run() {
-
 			for(int i=0;i<langs.length;i++){
-				// слой для заполнения языками
+				// СЃР»РѕР№ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ СЏР·С‹РєР°РјРё
 				final LinearLayout r = new LinearLayout(getContext());
 				r.setPadding(100, 10, 10, 10);
 				r.setOrientation(LinearLayout.HORIZONTAL);
@@ -444,44 +389,36 @@ p.setonDataIn(new onDataIn() {
 			}
 			else im.setImageResource(R.drawable.btn_check_off_disable);
 			r.addView(im);
-			//  ставим галочку, меняя направление перевода
+			//  СЃС‚Р°РІРёРј РіР°Р»РѕС‡РєСѓ, РјРµРЅСЏСЏ РЅР°РїСЂР°РІР»РµРЅРёРµ РїРµСЂРµРІРѕРґР°
 			im.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
 					((ImageView) findViewById(position)).setImageResource(R.drawable.btn_check_off_disable);
 				check = langs[v.getId()-1000][0];
-					
-				
 				position=v.getId();
 				((ImageView) v).setImageResource(R.drawable.btn_check_buttonless_on);
 				}
 			});
-			//  непосредственно язык
+			//  РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ СЏР·С‹Рє
 				TextView t=new TextView(getContext());
 				t.setGravity(Gravity.CENTER);
 				t.setTextColor(0xff000000);
 				String s="";
-				
 					s = langs[i][1];
 					t.setText(s);
 					r.addView(t);
 					rtrtr.addView(r);
-			
-		        
 				}
 			rtrtr.setVisibility(View.VISIBLE);;
 			}
-		});
-		
+		});	
 	}
-	// класс для активности 
+	// РєР»Р°СЃСЃ РґР»СЏ Р°РєС‚РёРІРЅРѕСЃС‚Рё
 public ChldView(Context context,int Title) {
 		super(context);
 		init(context,Title);
 	}
-
-// запрос и заполнение поля ввывода и титла для первого окна
+// Р·Р°РїСЂРѕСЃ Рё Р·Р°РїРѕР»РЅРµРЅРёРµ РїРѕР»СЏ РІРІС‹РІРѕРґР° Рё С‚РёС‚Р»Р° РґР»СЏ РїРµСЂРІРѕРіРѕ РѕРєРЅР°
 void translate(String in){
 	Post p=new Post();
 p.execute(p.BASE+in);
