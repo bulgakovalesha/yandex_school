@@ -1,16 +1,11 @@
 package ya.translate;
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-
 import java.net.URL;
-
 import javax.net.ssl.HttpsURLConnection;
-
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -24,8 +19,6 @@ public class Post extends AsyncTask<Object, Object, Object>{
 public	String BASE ="https://translate.yandex.net/api/v1.5/tr.json/translate?&options=1&"+Key;
 public	String BASE1 ="https://translate.yandex.net/api/v1.5/tr.json/getLangs?"+Key;
 public	String BASE2 =" https://dictionary.yandex.net/api/v1/dicservice.json/lookup?"+Key;
-
-
 public void setonDataIn(onDataIn ondataIn){
 this.ondataIn=ondataIn;
 if(ondataIn!=null)ondataIn.setOnGetAccaunts(data);
